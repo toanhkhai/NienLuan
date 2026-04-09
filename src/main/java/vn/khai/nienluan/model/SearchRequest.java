@@ -8,6 +8,6 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 public class SearchRequest {
-    private String key;
+    private String keyword;
     private String sessionId;
 }

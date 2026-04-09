@@ -17,16 +17,16 @@ public class SearchController {
 
     @PostMapping("/api/search")
     public String search(@RequestBody SearchRequest searchRequest){
-        String keyword = searchRequest.getKey();
+        String keyword = searchRequest.getKeyword();
         String sessionId = searchRequest.getSessionId();
 
         Map<String,String> message = Map.of(
-                "key",keyword,
+                "keyword",keyword,
                 "sessionId",sessionId
         );
 
         rabbitTemplate.convertAndSend("fanout-exchange","",message);
-        
+
         return null;
     }
 

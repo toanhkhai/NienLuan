@@ -12,18 +12,18 @@ public class RabbitMQConfig {
 
     //Cau hinh cac hang doi - tao ra 3 hang doi
     @Bean
-    public Queue worker1(){
-        return new Queue("worker-1-queue",true);
+    public Queue queueA(){
+        return new Queue("queueA",true);
     }
 
     @Bean
-    public Queue worker2(){
-        return new Queue("worker-2-queue",true);
+    public Queue queueB(){
+        return new Queue("queueB",true);
     }
 
     @Bean
-    public Queue worker3(){
-        return new Queue("worker-3-queue",true);
+    public Queue queueC(){
+        return new Queue("queueC",true);
     }
 
     //Cau hinh Exchange
@@ -35,23 +35,23 @@ public class RabbitMQConfig {
     //Cau hinh Binding
 
     @Bean
-    public Binding worker1Binding(){
+    public Binding queueA_Binding(){
         return BindingBuilder
-                .bind(worker1())
+                .bind(queueA())
                 .to(fanoutExchange());
     }
 
     @Bean
-    public Binding worker2Binding(){
+    public Binding queueB_Binding(){
         return BindingBuilder
-                .bind(worker2())
+                .bind(queueB())
                 .to(fanoutExchange());
     }
 
     @Bean
-    public Binding worker3Binding(){
+    public Binding queueC_Binding(){
         return BindingBuilder
-                .bind(worker3())
+                .bind(queueC())
                 .to(fanoutExchange());
     }
 }

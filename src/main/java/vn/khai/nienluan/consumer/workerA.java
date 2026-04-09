@@ -8,12 +8,12 @@ import org.springframework.stereotype.Component;
 import java.util.Map;
 
 @Component
-public class worker1 {
+public class workerA {
 
     @Autowired
     private SimpMessagingTemplate simpMessagingTemplate;
 
-    @RabbitListener(queues = "worker-1-queue")
+    @RabbitListener(queues = "queueA")
     public void search(Map<String,String> message){
         String keyword = message.get("keyword");
         String sessionId = message.get("sessionId");
