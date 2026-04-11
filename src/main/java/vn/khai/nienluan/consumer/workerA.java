@@ -24,8 +24,10 @@ public class workerA {
     public void processSearch(SearchRequest request) {
 
         RestTemplate restTemplate = new RestTemplate();
+
+        //Keyword search trên url k được khoản trống, ví dụ cloud computer -> cloud+computer
         String searchKeyword = request.getKeyword().replace(" ", "+");
-        // Tăng limit lên 10 để lấy nhiều kết quả
+        //Cho Limit lên 10
         String apiUrl = "https://openlibrary.org/search.json?q=" + searchKeyword + "&limit=10";
 
         try {
