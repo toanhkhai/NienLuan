@@ -22,9 +22,6 @@ public class workerA {
     @RabbitListener(queues = "queueA")
     public void processSearch(SearchRequest request) {
 
-        System.out.println("Worker A (OpenLibrary) đang tìm: " + request.getKeyword()
-                + " cho session: " + request.getSessionId());
-
         RestTemplate restTemplate = new RestTemplate();
         String searchKeyword = request.getKeyword().replace(" ", "+");
         // Tăng limit lên 10 để lấy nhiều kết quả
@@ -39,8 +36,8 @@ public class workerA {
 
             List<BookResponse> results = new ArrayList<>();
 
-            if (docs.isArray() && docs.size() > 0) {
-                // Lấy tối đa 7 cuốn
+            if (docs.isArray() && !docs.isEmpty()) {
+
                 int maxResults = Math.min(docs.size(), 7);
 
                 for (int i = 0; i < maxResults; i++) {
@@ -68,7 +65,7 @@ public class workerA {
             }
 
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
     }
 }
