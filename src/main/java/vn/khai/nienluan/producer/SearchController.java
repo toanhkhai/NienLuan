@@ -2,12 +2,11 @@ package vn.khai.nienluan.producer;
 
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import vn.khai.nienluan.model.SearchRequest;
-
-import java.util.Map;
 
 @RestController
 public class SearchController {
@@ -16,18 +15,12 @@ public class SearchController {
     private RabbitTemplate rabbitTemplate;
 
     @PostMapping("/api/search")
-    public String search(@RequestBody SearchRequest searchRequest){
-        String keyword = searchRequest.getKeyword();
-        String sessionId = searchRequest.getSessionId();
+    public ResponseEntity<String> search(@RequestBody SearchRequest searchRequest) {
+        rabbitTemplate.convertAndSend("fanout-exchange", "", searchRequest);
 
-        Map<String,String> message = Map.of(
-                "keyword",keyword,
-                "sessionId",sessionId
-        );
+        System.out.println("Đã nhận yêu cầu tìm kiếm: " + searchRequest.getKeyword()
+                + " - SessionId: " + searchRequest.getSessionId());
 
-        rabbitTemplate.convertAndSend("fanout-exchange","",message);
-
-        return null;
+        return ResponseEntity.ok("Đang tìm kiếm: " + searchRequest.getKeyword());
     }
-
 }
