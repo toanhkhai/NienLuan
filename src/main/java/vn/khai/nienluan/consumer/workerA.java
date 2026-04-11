@@ -63,17 +63,11 @@ public class workerA {
                 // Gửi toàn bộ danh sách kết quả
                 String destination = "/topic/results/" + request.getSessionId();
                 messagingTemplate.convertAndSend(destination, results);
-
-                System.out.println("✅ Worker A đã gửi " + results.size() + " kết quả đến: " + destination);
-                for (BookResponse r : results) {
-                    System.out.println("   📖 " + r.getTitle());
-                }
             } else {
                 System.out.println("Worker A không tìm thấy kết quả cho keyword: " + request.getKeyword());
             }
 
         } catch (Exception e) {
-            System.err.println("Worker A gặp lỗi: " + e.getMessage());
             e.printStackTrace();
         }
     }
