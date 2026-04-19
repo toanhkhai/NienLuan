@@ -2,7 +2,6 @@ package vn.khai.nienluan.consumer;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
@@ -13,7 +12,6 @@ import vn.khai.nienluan.model.SearchRequest;
 
 import java.util.ArrayList;
 import java.util.List;
-@Slf4j
 @Component
 public class workerA {
 
@@ -68,7 +66,7 @@ public class workerA {
                 }
 
                 // Gửi toàn bộ danh sách kết quả cho message -> PHẢI CÓ SESSION ID để gửi đúng client cần nhận
-                String destination = "/topic/results/" + request.getSessionId();
+                String destination = "/data-server-response/results/" + request.getSessionId();
                 messagingTemplate.convertAndSend(destination, results);
             } else {
                 System.out.println("Không tìm thấy kết quả cho keyword: " + request.getKeyword());
